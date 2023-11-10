@@ -3,9 +3,11 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const session = require("express-session");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
-const mongoDBAtlasUri =
-  "mongodb+srv://aidanxu:VEnR34luKLWDUHml@cluster0.0kszzqv.mongodb.net/myGoogleAuthApp?retryWrites=true&w=majority";
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const MONGO_URI = process.env.MONGO_URI;
 
 mongoose
   .connect(mongoDBAtlasUri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -25,10 +27,6 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model("User", userSchema);
 
 const app = express();
-
-const GOOGLE_CLIENT_ID =
-  "325812538409-2abgj5cleh32abl5mf4rsgdv0qj924mh.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
 
 // Passport setup
 passport.serializeUser((user, done) => {
